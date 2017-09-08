@@ -67,8 +67,16 @@ void CanBusWorkerDB::DeviceErrorOccurred(QCanBusDevice::CanBusError error)
     setError(CanBusWorkerDB::DeviceError,CanBusWorkerDB::QCanBusErrorMetaEnum.valueToKey(static_cast<int>(error)));
 }
 
+void CanBusWorkerDB::sendCanProtocolPresenceRequest()
+{
+    pendingFrameList.append(CanBusWorkerDB::CanProtocolPresenceRequest);
+    emit aFrameAdded();
+}
+
 const QMetaEnum CanBusWorkerDB::DataMetaEnum = QMetaEnum::fromType<CanBusWorkerDB::Data>();
 const QMetaEnum CanBusWorkerDB::ErrorMetaEnum = QMetaEnum::fromType<CanBusWorkerDB::Error>();
 const QMetaEnum CanBusWorkerDB::WarningMetaEnum = QMetaEnum::fromType<CanBusWorkerDB::Warning>();
 const QMetaEnum CanBusWorkerDB::NotificationMetaEnum = QMetaEnum::fromType<CanBusWorkerDB::Notification>();
 const QMetaEnum CanBusWorkerDB::QCanBusErrorMetaEnum = QMetaEnum::fromType<QCanBusDevice::CanBusError>();
+
+const QCanBusFrame CanBusWorkerDB::CanProtocolPresenceRequest = QCanBusFrame(0xf0, ".");

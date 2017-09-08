@@ -18,6 +18,7 @@ protected:
 private:
     CanBusWorkerDB * dbPtr = NULL;
     QTimer TimerFrameWritten;
+    QTimer idleTimer;
 };
 
 #endif // WRITEFRAME_H

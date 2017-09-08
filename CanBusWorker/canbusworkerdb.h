@@ -72,7 +72,7 @@ public:
     QList<QCanBusFrame> pendingFrameList;
 
     void initialize();
-    void dispose();
+    void dispose();    
 
     static const QMetaEnum DataMetaEnum;
     static const QMetaEnum ErrorMetaEnum;
@@ -81,6 +81,7 @@ public:
     static const QMetaEnum QCanBusErrorMetaEnum;
     static const Qt::ConnectionType uniqueQtConnectionType = static_cast<Qt::ConnectionType>(Qt::AutoConnection | Qt::UniqueConnection);
 
+    static const QCanBusFrame CanProtocolPresenceRequest;
 signals:
     void Out(QVariant , QVariant = QVariant());
     void PluginAndInterfaceChanged();
@@ -93,9 +94,9 @@ signals:
     void FrameReceived();
     void FrameWritten();
     void DeviceStateChanged(QCanBusDevice::CanBusDeviceState);
-    void DeviceConfigurationParameterSet();
 public slots:
     void DeviceErrorOccurred(QCanBusDevice::CanBusError error);
+    void sendCanProtocolPresenceRequest();
 };
 
 Q_DECLARE_METATYPE(QCanBusFrame)

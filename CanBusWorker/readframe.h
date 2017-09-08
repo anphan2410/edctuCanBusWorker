@@ -3,6 +3,7 @@
 
 #include <QState>
 #include <QTime>
+#include <QTimer>
 #include "canbusworkerdb.h"
 
 class readFrame : public QState
@@ -14,6 +15,7 @@ protected:
     void onExit(QEvent *) override;
 private:
     CanBusWorkerDB * dbPtr = Q_NULLPTR;
+    QTimer idleTimer;
 };
 
 #endif // READFRAME_H

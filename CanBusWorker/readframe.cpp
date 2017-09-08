@@ -4,6 +4,9 @@ readFrame::readFrame(CanBusWorkerDB *database) :
     dbPtr(database)
 {
     anIf(CanBusWorkerDBDbgEn, anTrk("State Constructed !"));
+    idleTimer.setParent(this);
+    idleTimer.setInterval(30000);
+    QObject::connect(&idleTimer, &QTimer::timeout, database, &CanBusWorkerDB::sendCanProtocolPresenceRequest);
 }
 
 void readFrame::onEntry(QEvent *)
@@ -18,9 +21,11 @@ void readFrame::onEntry(QEvent *)
         emit dbPtr->Out(QVariant::fromValue(CanBusWorkerDB::replyCanFrameWithTimeStamp),
                         QVariant::fromValue(tmp));
     }
+    idleTimer.start();
 }
 
 void readFrame::onExit(QEvent *)
 {
     anIf(CanBusWorkerDBDbgEn, anTrk("Leave State !"));
+    idleTimer.stop();
 }
